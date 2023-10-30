@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Hello World</title>
+</head>
+<body>
+  <script>
+    let text = 'hello';
+    console.log(`value: ${text}, type: ${typeof text}`);
+    text = 1;
+    console.log(`value: ${text}, type: ${typeof text}`); // 값이 재 할당되면서 type이 바뀜
+    text= '7' + 5;
+    console.log(`value: ${text}, type: ${typeof text}`); // string + number = string이 되면서 75는 string
+    text= '8' / 2;
+    console.log(`value: ${text}, type: ${typeof text}`); // string / number = string이 number로 바뀌어 8은 number변함
+    text= '8' * 2;
+    console.log(`value: ${text}, type: ${typeof text}`); // string * number = string이 number로 바뀌어 8은 number변함
+
+
+    const eojin = {name: 'eojin', age: 13}
+    console.log(eojin.age);
+    eojin.age = 31;
+    console.log(eojin.age);
+
+    {
+      console.log(happy);
+      var happy = "좋아";
+    }
+    console.log(happy);     // block에서 선언된 변수 호출 가능 ,var는 사용하면 헷갈리기 쉬움 즉 사용하면 안됨 
+
+
+    let mutable = '변한다';
+    mutable = '변했다';
+    console.log(mutable);
+
+    const immutable = '안 변한다';
+    immutable = '안 변하고 에러를 띄운다';
+    console.log(immutable);
+
+/*
+  var : hoisting이 가능한 변수
+  let : 값이 변할 수 있는 변수 (hoisting x)
+  const : 값이 변할 수 없는 변수 (hoisting x)
+
+hoisting은 코드가 선언되기도 전에 선언되어 있다고 간주한다.
+
+ex :
+  console.log(apple);
+  -> undefined
+  var apple = "red";
+  JS가 아닌 다른 언어일 경우 Eroor but JS는 hoisting 때문에 undefined || null 출력
+
+  나도 혼자 공부하면서 이론은 2번정도 들은 거 같다. 
+  하지만 이 당시에는 hoisting의 중요성을 체감하지 못했지만 프로젝트 규모가 커지고 코드의 양이 늘어나면서
+  hoisting의 중요성을 체감하게 되었다.
+*/
+    </script>
+</body>
+</html>
+  </script>
+</body>
+</html>

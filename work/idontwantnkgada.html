@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    
+    <textarea id="sendArea" placeholder="" style="width: 500px; height: 300px;"></textarea>
+
+    <textarea id="resultArea" ></textarea>
+
+    <button onclick="sendArea()" style="width: 100px; height: 100px;"></button>
+
+    <script>
+
+        function sendArea() {
+            let sendD = $("#sendArea").val();
+
+            // const matched = sendD.match(/"comment[^,]*,+/g);
+            // const length = matched.length;
+
+                       
+            const jsonString = sendD; // 수정된 데이터를 문자열로 저장하세요.
+            const jsonData = JSON.parse(jsonString);
+
+            
+            // console.log(matched);
+            // console.log(matched.length);
+            // console.log(JSON.stringify(jsonData));
+            // console.log(jsonData.length);
+
+            for(i=0; i<jsonData.length; i++) {
+                if(jsonData[i].comment) {
+                    const paper = jsonData[i].comment;
+                    jsonData[i].newest = paper;
+                    // console.log("paper =", paper);
+                } else if(jsonData[i].scores && Array.isArray(jsonData[i]["scores"])) {
+                    console.log("hello")
+                    for(j=0; j<jsonData[i]["scores"].length; j++) {
+                        const paper = jsonData[i].scores[j].comment;
+                        console.log("papaer =" + paper)
+                        jsonData[i].scores[j].mouseA = paper;
+                    }
+                }
+            }
+            console.log(JSON.stringify(jsonData));
+
+            $("#resultArea").val(JSON.stringify(jsonData));
+        }
+    </script>
+
+
+
+<script>
+    
+
+    // const regex1 = new RegExp(/"comment[^,]*,+/g);
+//             console.log(jsonData);
+//             console.log(JSON.stringify(jsonData));
+
+
+
+            
+// // "comment": "([^"]+)",+
+
+
+
+//             // for (let i = 0; i < jsonData.length; i++) {
+//             // console.log(`exec = ${jsonData[i].comment}`);
+//             // }
+</script>
+
+</body>
+</html>
+

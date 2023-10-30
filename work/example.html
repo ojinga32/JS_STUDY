@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <textarea id="text" style="width: 300px; height: 200px;"></textarea>
+    <button onclick="downloadList()">엑셀 추출</button>
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.2.1/exceljs.min.js" integrity="sha512-DPjFYmSXYGB7/5k/Z4h5iw1i29Vl//jj3I7v79DRy+T0o4KssDku6Hf7ImlIV87KmNIh+euT5H0LJhQmTnbC/A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+     // 상단 코드에서 Excel 및 saveAs 모듈을 불러왔으므로 추가로 import할 필요 없음
+
+  // 여러 엑셀 시트를 포함하는 하나의 workbook(단위) 생성
+  const wb = new Excel.Workbook();
+
+// 엑셀 sheet 생성
+const sheet = wb.addWorksheet("sheet name");
+
+
+
+// TH에 들어갈 텍스트 데이터
+const headers = ["주문번호", "메뉴", "가격", "주문날짜"];
+// TH width, 단위는 cell의 width나 height 단위는 픽셀이 아닌 엑셀의 너비 기준이다.
+const headerWidths = [40, 16, 16, 24];
+
+async function downloadList() {
+let textarea = document.getElementById("text"); // id 문자열로 전달
+let rows = textarea.value;
+
+
+try {
+//console.log(rows);
+    
+    // workbook 생성
+const wb = new Excel.Workbook();
+    // sheet 생성
+const sheet = wb.addWorksheet("배달 주문 내역");
+
+// 상단 헤더(TH) 추가
+const headerRow = sheet.addRow(headers);
+// 헤더의 높이값 지정
+headerRow.height = 30.75;
+// 각 헤더 cell에 스타일 지정
+headerRow.eachCell((cell, colNum) => {
+styleHeaderCell(cell);
+sheet.getColumn(colNum).width = headerWidths[colNum - 1];
+});
+
+// 각 Data cell에 데이터 삽입 및 스타일 지정
+rows.forEach(({ orderNum, menu, price, date }) => {
+const rowDatas = [orderNum, menu, price, date];
+const appendRow = sheet.addRow(rowDatas);
+
+appendRow.eachCell((cell, colNum) => {
+  styleDataCell(cell, colNum);
+  if (colNum === 1) {
+    cell.font = {
+      color: { argb: "ff1890ff" },
+    };
+  }
+  if (colNum === 3) {
+    cell.numFmt = "0,000";
+  }
+});
+});
+
+// 파일 생성
+const fileData = await wb.xlsx.writeBuffer(); //writeBuffer는 프로미스를 반환하므로 async-await을 사용해야 한다.
+const blob = new Blob([fileData], {
+type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+});
+saveAs(blob, `배달 주문 내역`);
+} catch (error) {
+console.log(error);
+}
+};
+
+
+const styleHeaderCell = (cell) => {
+cell.fill = {
+type: "pattern",
+pattern: "solid",
+fgColor: { argb: "ffebebeb" },
+};
+cell.border = {
+bottom: { style: "thin", color: { argb: "-100000f" } },
+right: { style: "thin", color: { argb: "-100000f" } },
+};
+cell.font = {
+name: "Arial",
+size: 12,
+bold: true,
+color: { argb: "ff252525" },
+};
+cell.alignment = {
+vertical: "middle",
+horizontal: "center",
+wrapText: true,
+};
+};
+
+const styleDataCell = (cell) => {
+cell.fill = {
+type: "pattern",
+pattern: "solid",
+fgColor: { argb: "ffffffff" },
+};
+cell.border = {
+bottom: { style: "thin", color: { argb: "-100000f" } },
+right: { style: "thin", color: { argb: "-100000f" } },
+};
+cell.font = {
+name: "Arial",
+size: 10,
+color: { argb: "ff252525" },
+};
+cell.alignment = {
+vertical: "middle",
+horizontal: "center",
+wrapText: true,
+};
+};
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
+
+    <script>
+   
+    </script>
+</body>
+</html>
