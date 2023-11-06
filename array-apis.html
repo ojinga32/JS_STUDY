@@ -78,7 +78,40 @@
             const result = students.map((student) => student.score);
             console.log(result);
         }
+
+        // Q8. check if there is a student with the score lower than 50
+        {
+            const result = students.some((student) => student.score < 50);
+            console.log(result);
+
+            const result2 = !students.every((student) => student.score >= 50);
+            console.log(result2);
+        }
+
+        // Q9. compute students' average score
+        {
+            const result = students.reduce((prev, curr) => prev + curr.score , 0)   // reduceRight은 뒤에부터 순차적으로 돈다
+            console.log(result / 5);
+        }
+
+        // Q10. make a string containing all the score
+        // result should be: '45, 80, 90, 66, 88'
+        {
+            // const result = students.map((student) => student.score).join();
+            const result = students.map((student) => student.score)
+            .filter((score) => score > 50)
+            .join();
+            console.log(result);
+        }
     
+        // Bonus! do Q10 sorted in ascending order
+        // result should be: '45, 66, 80, 88, 90'
+        {
+            const result = students.map((student) => student.score)
+            .sort((a, b) => a - b)
+            .join();
+            console.log(result);
+        }
     </script>    
 </body>
 </html>
